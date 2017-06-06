@@ -62,7 +62,6 @@ namespace RestServiceCore.WebApi
             loggerFactory.AddDebug();
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                //Authentication
                 AuthenticationScheme = "Cookies",
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true
