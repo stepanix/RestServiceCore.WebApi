@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace RestServiceCore.EntityFrameWork.Repositories
 {
     public class TagRepository : ORMBaseRepository<Tag, int>, ITagRepository
@@ -28,6 +29,8 @@ namespace RestServiceCore.EntityFrameWork.Repositories
         {
             throw new NotImplementedException();
         }
+
+        
 
         public Task<Tag> InsertTag(Tag tag)
         {

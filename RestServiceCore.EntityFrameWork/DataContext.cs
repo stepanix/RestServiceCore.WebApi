@@ -24,6 +24,7 @@ namespace RestServiceCore.EntityFrameWork
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Tag>().ToTable("Tag");           
             modelBuilder.Entity<Tag>()
             .Property(t => t.AddedDate)
@@ -44,14 +45,19 @@ namespace RestServiceCore.EntityFrameWork
              .IsRequired()
              .HasColumnType("DateTime")
              .HasDefaultValueSql("GetDate()");
+
+            modelBuilder.Entity<ContactMember>().ToTable("ContactMember");
+            modelBuilder.Entity<ContactMember>()
+            .Property(t => t.AddedDate)
+             .IsRequired()
+             .HasColumnType("DateTime")
+             .HasDefaultValueSql("GetDate()");
         }
 
         public virtual DbSet<Tag> Tags { get; set; }
         public DbSet<Position> Positions { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-        //public DbSet<ContactTag> ContactTags { get; set; }
-
-
+        public DbSet<ContactMember> ContactMembers { get; set; }
 
     }
 

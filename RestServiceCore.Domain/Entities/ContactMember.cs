@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RestServiceCore.Domain.Entities
 {
-    public class ContactTag : BaseEntity<int>
+    public class ContactMember : BaseEntity<int>
     {
         [ForeignKey("Contact")]
         public int ContactId {get;set;}

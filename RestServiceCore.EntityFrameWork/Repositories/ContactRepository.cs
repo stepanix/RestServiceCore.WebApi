@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 
+
 namespace RestServiceCore.EntityFrameWork.Repositories
 {
     public class ContactRepository : ORMBaseRepository<Contact, int>, IContactRepository
@@ -26,8 +27,7 @@ namespace RestServiceCore.EntityFrameWork.Repositories
         public async Task<Contact> GetContact(int id)
         {
             return await context.Contacts
-                .Include(p => p.Position)
-                .Include(tg => tg.Tags)
+                .Include(p => p.Position)                
                 .FirstOrDefaultAsync(uid => uid.Id==id);
         }
 
@@ -35,7 +35,6 @@ namespace RestServiceCore.EntityFrameWork.Repositories
         {
             return await context.Contacts
                 .Include(p => p.Position)
-                .Include(tg => tg.Tags)
                 .ToListAsync();
         }
 

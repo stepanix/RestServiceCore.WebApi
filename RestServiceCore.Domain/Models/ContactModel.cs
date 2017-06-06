@@ -1,7 +1,6 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace RestServiceCore.Domain.Models
 {
@@ -12,6 +11,6 @@ namespace RestServiceCore.Domain.Models
         public string Surname { get; set; }
         public int PositionId { get; set; }
         public PositionModel Position { get; set; }
-        public ICollection<TagModel> Tags { get; set; }
+        public List<TagModel> Tags { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RestServiceCore.Domain.Models
 {
-    public class ContactTagModel
+    public class ContactMemberModel
     {
         public int Id { get; set; }
         public int ContactId { get; set; }

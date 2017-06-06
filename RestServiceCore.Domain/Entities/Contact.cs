@@ -11,6 +11,6 @@ namespace RestServiceCore.Domain.Entities
         [ForeignKey("Position")]
         public int PositionId { get; set; }
         public Position Position { get; set; }
-        public ICollection<Tag> Tags { get; set; }
+       
     }
 }

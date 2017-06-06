@@ -12,7 +12,7 @@ namespace RestServiceCore.Domain
             CreateMap<Contact, ContactModel>().ReverseMap();
             CreateMap<Position, PositionModel>().ReverseMap();
             CreateMap<Tag, TagModel>().ReverseMap();
-            CreateMap<ContactTag, ContactTagModel>().ReverseMap();
+            CreateMap<ContactMember, ContactMemberModel>().ReverseMap();
         }
     }
 }

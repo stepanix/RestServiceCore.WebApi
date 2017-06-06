@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using RestServiceCore.Service.Services.Positions;
 using RestServiceCore.Service.Services;
 
+using RestServiceCore.Service.Services.ContactMembers;
+
 namespace RestServiceCore.WebApi
 {
     public class Startup
@@ -51,6 +53,8 @@ namespace RestServiceCore.WebApi
             services.AddScoped<IPositionRepository, PositionRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IContactMemberRepository, ContactMemberRepository>();
+            services.AddScoped<IContactMemberService, ContactMemberService>();
             services.AddAutoMapper();
         }
 

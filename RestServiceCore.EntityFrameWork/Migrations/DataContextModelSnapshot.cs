@@ -41,6 +41,31 @@ namespace RestServiceCore.EntityFrameWork.Migrations
                     b.ToTable("Contact");
                 });
 
+            modelBuilder.Entity("RestServiceCore.Domain.Entities.ContactMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("AddedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DateTime")
+                        .HasDefaultValueSql("GetDate()");
+
+                    b.Property<int>("ContactId");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("TagId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ContactMember");
+                });
+
             modelBuilder.Entity("RestServiceCore.Domain.Entities.Position", b =>
                 {
                     b.Property<int>("Id")
@@ -70,15 +95,11 @@ namespace RestServiceCore.EntityFrameWork.Migrations
                         .HasColumnType("DateTime")
                         .HasDefaultValueSql("GetDate()");
 
-                    b.Property<int?>("ContactId");
-
                     b.Property<string>("Description");
 
                     b.Property<DateTime?>("ModifiedDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContactId");
 
                     b.ToTable("Tag");
                 });
@@ -91,11 +112,17 @@ namespace RestServiceCore.EntityFrameWork.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("RestServiceCore.Domain.Entities.Tag", b =>
+            modelBuilder.Entity("RestServiceCore.Domain.Entities.ContactMember", b =>
                 {
-                    b.HasOne("RestServiceCore.Domain.Entities.Contact")
-                        .WithMany("Tags")
-                        .HasForeignKey("ContactId");
+                    b.HasOne("RestServiceCore.Domain.Entities.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RestServiceCore.Domain.Entities.Tag", "Tag")
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }
