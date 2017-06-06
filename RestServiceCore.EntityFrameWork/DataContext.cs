@@ -37,11 +37,18 @@ namespace RestServiceCore.EntityFrameWork
              .IsRequired()
              .HasColumnType("DateTime")
              .HasDefaultValueSql("GetDate()");
+
+            modelBuilder.Entity<Contact>().ToTable("Contact");
+            modelBuilder.Entity<Contact>()
+            .Property(t => t.AddedDate)
+             .IsRequired()
+             .HasColumnType("DateTime")
+             .HasDefaultValueSql("GetDate()");
         }
 
         public virtual DbSet<Tag> Tags { get; set; }
         public DbSet<Position> Positions { get; set; }
-        //public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
         //public DbSet<ContactTag> ContactTags { get; set; }
 
 

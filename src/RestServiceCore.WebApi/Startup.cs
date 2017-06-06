@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using RestServiceCore.Service.Services.Positions;
+using RestServiceCore.Service.Services;
 
 namespace RestServiceCore.WebApi
 {
@@ -48,6 +49,8 @@ namespace RestServiceCore.WebApi
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IPositionRepository, PositionRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IContactService, ContactService>();
             services.AddAutoMapper();
         }
 

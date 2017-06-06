@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using RestServiceCore.Domain.Models;
 using AutoMapper;
 using RestServiceCore.Domain.Repositories;
+using RestServiceCore.Domain.Entities;
 
 namespace RestServiceCore.Service.Services
 {
@@ -24,24 +25,32 @@ namespace RestServiceCore.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<ContactModel> GetContactAsync(int id)
+        public async Task<ContactModel> GetContactAsync(int id)
         {
-            throw new NotImplementedException();
+            return mapper.Map<ContactModel>(await contactRepository.GetContact(id));
         }
 
         public async Task<IEnumerable<ContactModel>> GetContactsAsync()
         {
-            return mapper.Map<IEnumerable<ContactModel>>(await contactRepository.GetAllAsync());
+            return mapper.Map<IEnumerable<ContactModel>>(await contactRepository.GetContacts());
         }
 
-        public Task<ContactModel> InsertContactAsync(ContactModel contact)
+        public  async Task<ContactModel> InsertContactAsync(ContactModel contact)
         {
-            throw new NotImplementedException();
+            var newContact = await contactRepository.InsertAsync(mapper.Map<Contact>(contact));
+            await contactRepository.SaveChangesAsync();
+            return mapper.Map<ContactModel>(newContact);
         }
 
-        public Task<ContactModel> UpdateContactAsync(ContactModel contact)
+        public async Task<ContactModel> UpdateContactAsync(ContactModel contact)
         {
-            throw new NotImplementedException();
+            var contactForUpdate = await contactRepository.GetAsync(contact.Id);
+            contactForUpdate.ModifiedDate = DateTime.Now;
+            contactForUpdate.PositionId = contact.PositionId;
+            contactForUpdate.Surname = contact.Surname;
+            contactForUpdate.FirstName = contact.FirstName;
+            await contactRepository.SaveChangesAsync();
+            return mapper.Map<ContactModel>(contactForUpdate);
         }
     }
 }

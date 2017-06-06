@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RestServiceCore.Domain.Models;
+using RestServiceCore.WebApi.Dto.Contacts.Dto.In;
 using RestServiceCore.WebApi.Dto.Positions.In;
 using RestServiceCore.WebApi.Dto.Tags.In;
 using System;
@@ -15,6 +16,7 @@ namespace RestServiceCore.WebApi
         {
             CreateMap<TagModel, TagDtoIn>().ReverseMap();
             CreateMap<PositionModel, PositionDtoIn>().ReverseMap();
+            CreateMap<ContactModel, ContactDtoIn>().ReverseMap();
         }
     }
 }
