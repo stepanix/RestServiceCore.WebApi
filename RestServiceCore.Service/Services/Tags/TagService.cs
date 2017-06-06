@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using RestServiceCore.Domain.Models;
 using RestServiceCore.Domain.Repositories;
 using AutoMapper;
+using RestServiceCore.Domain.Entities;
 
 namespace RestServiceCore.Service.Services.Tags
 {
@@ -34,14 +35,20 @@ namespace RestServiceCore.Service.Services.Tags
             return mapper.Map<IEnumerable<TagModel>>(await tagRepository.GetAllAsync());
         }
 
-        public Task<TagModel> InsertTagAsync(TagModel contact)
+        public async Task<TagModel> InsertTagAsync(TagModel tag)
         {
-            throw new NotImplementedException();
+            var newTag = await tagRepository.InsertAsync(mapper.Map<Tag>(tag));
+            await tagRepository.SaveChangesAsync();
+            return mapper.Map<TagModel>(newTag);
         }
 
-        public Task<TagModel> UpdateTagAsync(TagModel contact)
+        public async Task<TagModel> UpdateTagAsync(TagModel tag)
         {
-            throw new NotImplementedException();
+            var tagForUpdate = await tagRepository.GetAsync(tag.Id);
+            tagForUpdate.ModifiedDate = DateTime.Now;
+            tagForUpdate.Description = tag.Description;
+            await tagRepository.SaveChangesAsync();
+            return mapper.Map<TagModel>(tagForUpdate);
         }
     }
 }

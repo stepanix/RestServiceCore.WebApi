@@ -21,7 +21,10 @@ namespace RestServiceCore.EntityFrameWork.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("AddedDate");
+                    b.Property<DateTime>("AddedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DateTime")
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<string>("Description");
 
@@ -29,7 +32,7 @@ namespace RestServiceCore.EntityFrameWork.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tag");
                 });
         }
     }

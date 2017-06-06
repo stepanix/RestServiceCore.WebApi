@@ -24,7 +24,7 @@ namespace RestServiceCore.EntityFrameWork.Repositories.Base
 
         public abstract T Insert(T entity);
 
-        public abstract Task<EntityEntry<T>> InsertAsync(T entity);
+        public abstract Task<T> InsertAsync(T entity);
 
         public abstract void SaveChanges();
 

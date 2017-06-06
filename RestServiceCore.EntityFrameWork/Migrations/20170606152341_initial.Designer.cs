@@ -8,7 +8,7 @@ using RestServiceCore.EntityFrameWork;
 namespace RestServiceCore.EntityFrameWork.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20170606022647_initial")]
+    [Migration("20170606152341_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,10 @@ namespace RestServiceCore.EntityFrameWork.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("AddedDate");
+                    b.Property<DateTime>("AddedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DateTime")
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<string>("Description");
 
@@ -30,7 +33,7 @@ namespace RestServiceCore.EntityFrameWork.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tag");
                 });
         }
     }

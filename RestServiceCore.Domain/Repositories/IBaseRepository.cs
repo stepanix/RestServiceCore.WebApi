@@ -13,7 +13,7 @@ namespace RestServiceCore.Domain.Repositories
         T Get(int id);
         Task<T> GetAsync(int id);
         T Insert(T entity);
-        Task<EntityEntry<T>> InsertAsync(T entity);
+        Task<T> InsertAsync(T entity);
         T Update(T entity);
         Task<T> UpdateAsync(T entity);
         void Delete(int id);

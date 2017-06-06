@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 using RestServiceCore.Domain.Entity;
 using RestServiceCore.Domain.Repositories;
 using System;
@@ -85,9 +85,10 @@ namespace RestServiceCore.EntityFrameWork.Repositories.Base
             return await table.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public override async Task<EntityEntry<T>> InsertAsync(T entity)
+        public override async Task<T> InsertAsync(T entity)
         {
-            return await table.AddAsync(entity);
+             table.Add(entity);
+             return await Task.FromResult(entity);
         }
 
         public override async Task<T> UpdateAsync(T entity)

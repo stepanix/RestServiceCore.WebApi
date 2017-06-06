@@ -22,16 +22,21 @@ namespace RestServiceCore.EntityFrameWork
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(ConnectionString);
+           
 
             //base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            
+        {            
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Tag>().ToTable("Tag");
+            modelBuilder.Entity<Tag>()
+            .Property(t => t.AddedDate)
+             .IsRequired()
+             .HasColumnType("DateTime")
+             .HasDefaultValueSql("GetDate()");
         }
 
         public virtual DbSet<Tag> Tags { get; set; }

@@ -7,6 +7,7 @@ using RestServiceCore.WebApi.Controllers.Base;
 using RestServiceCore.Service.Services.Tags;
 using AutoMapper;
 using RestServiceCore.Domain.Models;
+using RestServiceCore.WebApi.Dto.Tags.In;
 
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,10 +26,17 @@ namespace RestServiceCore.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TagModel>> ReadAll()
+        public async Task<ObjectResult> ReadAll()
         {
             var created = await tagService.GetTagsAsync();
-            return created;
+            return Ok(created);
+        }
+
+        [HttpPost]
+        public async Task<ObjectResult> Post([FromBody]TagDtoIn tag)
+        {
+            var created = await tagService.InsertTagAsync(mapper.Map<TagModel>(tag));
+            return Ok(created);
         }
     }
 }

@@ -10,8 +10,8 @@ namespace RestServiceCore.Service.Services.Tags
     {
         Task<IEnumerable<TagModel>> GetTagsAsync();
         Task<TagModel> GetTagAsync(int id);
-        Task<TagModel> InsertTagAsync(TagModel contact);
-        Task<TagModel> UpdateTagAsync(TagModel contact);
+        Task<TagModel> InsertTagAsync(TagModel tag);
+        Task<TagModel> UpdateTagAsync(TagModel tag);
         void DeleteTag(int id);
     }
 }
