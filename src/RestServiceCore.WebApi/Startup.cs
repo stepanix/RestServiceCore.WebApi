@@ -14,6 +14,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using RestServiceCore.Service.Services.Positions;
 
 namespace RestServiceCore.WebApi
 {
@@ -35,19 +36,19 @@ namespace RestServiceCore.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             var sqlConnectionString = Configuration["AppSettings:DbConnectionString"];
-            //var sqlConnectionString = Configuration.GetConnectionString("DbConnectionString");
             DataContext.ConnectionString = Configuration.GetConnectionString(sqlConnectionString);
             
-            
             services.AddDbContext<DataContext>(options => options.UseSqlServer(sqlConnectionString));
+
             // Add framework services.
             services.AddAuthentication(options => options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
             services.AddCors();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IPositionService, PositionService>();
+            services.AddScoped<IPositionRepository, PositionRepository>();
             services.AddAutoMapper();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

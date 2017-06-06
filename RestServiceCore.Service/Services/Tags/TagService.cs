@@ -25,9 +25,9 @@ namespace RestServiceCore.Service.Services.Tags
             throw new NotImplementedException();
         }
 
-        public Task<TagModel> GetTagAsync(int id)
+        public async Task<TagModel> GetTagAsync(int id)
         {
-            throw new NotImplementedException();
+            return mapper.Map<TagModel>(await tagRepository.GetAsync(id));
         }
 
         public async Task<IEnumerable<TagModel>> GetTagsAsync()

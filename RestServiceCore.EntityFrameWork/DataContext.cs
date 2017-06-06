@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RestServiceCore.Domain.Entities;
 using Microsoft.Extensions.Configuration;
+using RestServiceCore.Domain.Entity;
 
 namespace RestServiceCore.EntityFrameWork
 {
@@ -13,26 +14,25 @@ namespace RestServiceCore.EntityFrameWork
         (DbContextOptions<DataContext> options) : base(options)
         {
         }
-
-
-        //public DbSet<Contact> Contacts { get; set; }
-        //public DbSet<ContactTag> ContactTags { get; set; }
-        //public DbSet<Position> Positions { get; set; }
        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
-
-            //base.OnConfiguring(optionsBuilder);
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {            
-
+        {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Tag>().ToTable("Tag");
+            modelBuilder.Entity<Tag>().ToTable("Tag");           
             modelBuilder.Entity<Tag>()
+            .Property(t => t.AddedDate)
+             .IsRequired()
+             .HasColumnType("DateTime")
+             .HasDefaultValueSql("GetDate()");
+
+            modelBuilder.Entity<Position>().ToTable("Position");
+            modelBuilder.Entity<Position>()
             .Property(t => t.AddedDate)
              .IsRequired()
              .HasColumnType("DateTime")
@@ -40,6 +40,10 @@ namespace RestServiceCore.EntityFrameWork
         }
 
         public virtual DbSet<Tag> Tags { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        //public DbSet<Contact> Contacts { get; set; }
+        //public DbSet<ContactTag> ContactTags { get; set; }
+
 
 
     }

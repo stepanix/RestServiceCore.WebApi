@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RestServiceCore.WebApi.Controllers.Base;
 using RestServiceCore.Service.Services.Tags;
 using AutoMapper;
 using RestServiceCore.Domain.Models;
@@ -23,6 +20,13 @@ namespace RestServiceCore.WebApi.Controllers
         {
             this.tagService = tagService;
             this.mapper = mapper;
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ObjectResult> Read(int id)
+        {
+            var created = await tagService.GetTagAsync(id);
+            return Ok(created);
         }
 
         [HttpGet]

@@ -8,7 +8,7 @@ using RestServiceCore.EntityFrameWork;
 namespace RestServiceCore.EntityFrameWork.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20170606152341_initial")]
+    [Migration("20170606163116_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -16,6 +16,25 @@ namespace RestServiceCore.EntityFrameWork.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("RestServiceCore.Domain.Entities.Position", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("AddedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DateTime")
+                        .HasDefaultValueSql("GetDate()");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Position");
+                });
 
             modelBuilder.Entity("RestServiceCore.Domain.Entities.Tag", b =>
                 {
