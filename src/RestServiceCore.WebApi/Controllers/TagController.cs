@@ -38,5 +38,12 @@ namespace RestServiceCore.WebApi.Controllers
             var created = await tagService.InsertTagAsync(mapper.Map<TagModel>(tag));
             return Ok(created);
         }
+
+        [HttpPut]
+        public async Task<ObjectResult> Put([FromBody]TagDtoIn tag)
+        {
+            var created = await tagService.UpdateTagAsync(mapper.Map<TagModel>(tag));
+            return Ok(created);
+        }
     }
 }
