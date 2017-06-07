@@ -31,7 +31,9 @@ namespace RestServiceCore.Service.Services
 
         public async Task<ContactModel> GetContactAsync(int id)
         {
-            return mapper.Map<ContactModel>(await contactRepository.GetContact(id));
+            var contact = mapper.Map<ContactModel>(await contactRepository.GetContact(id));
+            contact.Tags = await GetAllContactTags(contact.Id);
+            return contact;
         }
 
         public async Task<IEnumerable<SearchModel>> SearchContactsDynamicallyAsync(string search)
