@@ -36,23 +36,35 @@ namespace RestServiceCore.Service.Services
         public async Task<IEnumerable<ContactModel>> GetContactsAsync(int tagId)
         {
             List<ContactModel> newContactList = new List<ContactModel>();
-            List<TagModel> newTagList = new List<TagModel>();
+            
 
-            var contacts = mapper.Map<IEnumerable<ContactModel>>(await contactRepository.GetContacts());
-            foreach (var contact in contacts)
+            var contactMembers = mapper.Map<IEnumerable<ContactMemberModel>>(await contactMemberRepository.GetContactMembersByTag(tagId));
+            foreach (var contactMember in contactMembers)
             {
-                var ContactMembers = mapper.Map<IEnumerable<ContactMemberModel>>(await contactMemberRepository.GetContactMembers(contact.Id));
-                foreach (var ContactMember in ContactMembers)
-                {
-                    //Get all other ags including selected tag for contact
-                    newTagList.Add(ContactMember.Tag);
-                }
-                contact.Tags = newTagList.Distinct().ToList<TagModel>();
-                newContactList.Add(contact);
-                //clear list to avoid duplicates
-                newTagList.Clear();
+                //Build Ideal Contact Model
+                newContactList.Add(new ContactModel {
+                    Id = contactMember.Contact.Id,
+                    FirstName = contactMember.Contact.FirstName,
+                    Surname = contactMember.Contact.Surname,
+                    PositionId = contactMember.Contact.Position.Id,
+                    Position = contactMember.Contact.Position,
+                    Tags = await GetAllContactTags(contactMember.Contact.Id)
+                });
             }
             return newContactList;
+        }
+
+        private async Task<List<TagModel>> GetAllContactTags(int contactId)
+        {
+            List<TagModel> newTagList = new List<TagModel>();
+            //Get All Tags for this contact
+            var ContactMembers = mapper.Map<IEnumerable<ContactMemberModel>>(await contactMemberRepository.GetContactMembers(contactId));
+            foreach (var ContactMember in ContactMembers)
+            {
+                //Get all other Tags including selected tag for contact
+                newTagList.Add(ContactMember.Tag);
+            }
+            return newTagList;
         }
 
 
