@@ -5,6 +5,7 @@ using RestServiceCore.EntityFrameWork.Repositories.Base;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 
 
@@ -38,9 +39,26 @@ namespace RestServiceCore.EntityFrameWork.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Contact>> GetContactsByPosition(int poistionId)
+        {
+            return await context.Contacts
+                .Where(pid => pid.PositionId== poistionId)
+                .Include(p => p.Position)
+                .ToListAsync();
+        }
+
         public Task<Contact> InsertContact(Contact contact)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Contact>> SearchContacts(string search)
+        {
+            return await context.Contacts
+                .Where(nm => nm.FirstName.ToLower().Contains(search)
+                || nm.Surname.ToLower().Contains(search))
+                .Include(p => p.Position)
+                .ToListAsync();
         }
 
         public Task<Contact> UpdateContact(Contact contact)

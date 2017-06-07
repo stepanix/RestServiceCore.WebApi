@@ -12,12 +12,14 @@ namespace RestServiceCore.Service.Services
     public class ContactService : IContactService
     {
         IContactRepository contactRepository;
+        IPositionRepository positionRepository;
         IContactMemberRepository contactMemberRepository;
         IMapper mapper;
 
-        public ContactService(IMapper mapper, IContactRepository contactRepository, IContactMemberRepository contactMemberRepository)
+        public ContactService(IMapper mapper, IPositionRepository positionRepository, IContactRepository contactRepository, IContactMemberRepository contactMemberRepository)
         {
             this.mapper = mapper;
+            this.positionRepository = positionRepository;
             this.contactRepository = contactRepository;
             this.contactMemberRepository = contactMemberRepository;
         }
@@ -32,11 +34,54 @@ namespace RestServiceCore.Service.Services
             return mapper.Map<ContactModel>(await contactRepository.GetContact(id));
         }
 
+        public async Task<IEnumerable<SearchModel>> SearchContactsDynamicallyAsync(string search)
+        {
+            List<SearchModel> searchModelList = new List<SearchModel>();
+            var contacts = mapper.Map<IEnumerable<ContactModel>>(await contactRepository.SearchContacts(search));
+            var positions = mapper.Map<IEnumerable<PositionModel>>(await positionRepository.SearchPositions(search));
+            foreach (var contact in contacts)
+            {
+                searchModelList.Add(new SearchModel
+                {
+                    Id = contact.Id,
+                    Description = contact.FirstName + "  " + contact.Surname,
+                    SearchType = "contact"
+                });
+            }
+            foreach (var position in positions)
+            {
+                searchModelList.Add(new SearchModel
+                {
+                    Id = position.Id,
+                    Description = position.Description,
+                    SearchType = "position"
+                });
+            }
+            return searchModelList;
+        }
+
+        public async Task<IEnumerable<ContactModel>> GetContactsByPositionAsync(int positionId)
+        {
+            List<ContactModel> newContactList = new List<ContactModel>();
+            var contacts = mapper.Map<IEnumerable<ContactModel>>(await contactRepository.GetContactsByPosition(positionId));
+            foreach(var contact in contacts)
+            {
+                newContactList.Add(new ContactModel
+                {
+                    Id = contact.Id,
+                    FirstName = contact.FirstName,
+                    Surname = contact.Surname,
+                    PositionId = contact.Position.Id,
+                    Position = contact.Position,
+                    Tags = await GetAllContactTags(contact.Id)
+                });
+            }
+            return newContactList;
+        }
 
         public async Task<IEnumerable<ContactModel>> GetContactsAsync(int tagId)
         {
             List<ContactModel> newContactList = new List<ContactModel>();
-            
 
             var contactMembers = mapper.Map<IEnumerable<ContactMemberModel>>(await contactMemberRepository.GetContactMembersByTag(tagId));
             foreach (var contactMember in contactMembers)
@@ -106,5 +151,7 @@ namespace RestServiceCore.Service.Services
             await contactRepository.SaveChangesAsync();
             return mapper.Map<ContactModel>(contactForUpdate);
         }
+
+       
     }
 }

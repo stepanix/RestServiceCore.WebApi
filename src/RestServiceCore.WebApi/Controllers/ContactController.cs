@@ -5,6 +5,7 @@ using RestServiceCore.Service.Services;
 using AutoMapper;
 using RestServiceCore.WebApi.Dto.Contacts.Dto.In;
 using RestServiceCore.Domain.Models;
+using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,6 +35,14 @@ namespace RestServiceCore.WebApi.Controllers
         public async Task<ObjectResult> ReadContactMembersByTag(int tagId)
         {
             var created = await contactService.GetContactsAsync(tagId);
+            return Ok(created);
+        }
+
+        [HttpGet("id")]
+        [Route("search")]
+        public async Task<ObjectResult> SearchContact(string searchVar)
+        {
+            var created = await contactService.SearchContactsDynamicallyAsync(searchVar);
             return Ok(created);
         }
 

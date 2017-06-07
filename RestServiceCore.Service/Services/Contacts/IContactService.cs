@@ -8,7 +8,9 @@ namespace RestServiceCore.Service.Services
 {
     public interface IContactService
     {
+        Task<IEnumerable<SearchModel>> SearchContactsDynamicallyAsync(string search);
         Task<IEnumerable<ContactModel>> GetContactsAsync();
+        Task<IEnumerable<ContactModel>> GetContactsByPositionAsync(int positionId);
         Task<IEnumerable<ContactModel>> GetContactsAsync(int tagId);
         Task<ContactModel> GetContactAsync(int id);
         Task<ContactModel> InsertContactAsync(ContactModel contact);
