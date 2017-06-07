@@ -13,6 +13,7 @@ namespace RestServiceCore.Service.Services.ContactMembers
     {
 
         IContactMemberRepository ContactMemberRepository;
+        ITagRepository tagRepository;
         IMapper mapper;
 
         public ContactMemberService(IMapper mapper, IContactMemberRepository ContactMemberRepository)

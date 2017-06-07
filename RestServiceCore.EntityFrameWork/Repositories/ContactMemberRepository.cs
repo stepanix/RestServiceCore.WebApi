@@ -39,9 +39,10 @@ namespace RestServiceCore.EntityFrameWork.Repositories
         public async Task<IEnumerable<ContactMember>> GetContactMembersByTag(int tagId)
         {
             return await context.ContactMembers
-                .Where(cid => cid.TagId == tagId)
-                .Include(tg => tg.Tag)
+                .Where(cid => cid.TagId == tagId)                
                 .Include(ct => ct.Contact)
+                .Include(ct => ct.Contact.Position)
+                .Include(ct => ct.Tag)
                 .ToListAsync();
         }
 

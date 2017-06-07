@@ -32,6 +32,30 @@ namespace RestServiceCore.Service.Services
             return mapper.Map<ContactModel>(await contactRepository.GetContact(id));
         }
 
+
+        public async Task<IEnumerable<ContactModel>> GetContactsAsync(int tagId)
+        {
+            List<ContactModel> newContactList = new List<ContactModel>();
+            List<TagModel> newTagList = new List<TagModel>();
+
+            var contacts = mapper.Map<IEnumerable<ContactModel>>(await contactRepository.GetContacts());
+            foreach (var contact in contacts)
+            {
+                var ContactMembers = mapper.Map<IEnumerable<ContactMemberModel>>(await contactMemberRepository.GetContactMembers(contact.Id));
+                foreach (var ContactMember in ContactMembers)
+                {
+                    //Get all other ags including selected tag for contact
+                    newTagList.Add(ContactMember.Tag);
+                }
+                contact.Tags = newTagList.Distinct().ToList<TagModel>();
+                newContactList.Add(contact);
+                //clear list to avoid duplicates
+                newTagList.Clear();
+            }
+            return newContactList;
+        }
+
+
         public async Task<IEnumerable<ContactModel>> GetContactsAsync()
         {
             List<ContactModel> newContactList = new List<ContactModel>();
@@ -43,13 +67,15 @@ namespace RestServiceCore.Service.Services
                 var ContactMembers = mapper.Map <IEnumerable<ContactMemberModel>>(await contactMemberRepository.GetContactMembers(contact.Id));
                 foreach(var ContactMember in ContactMembers)
                 {
-                    newTagList.Add(ContactMember.Tag);                     
+                    newTagList.Add(ContactMember.Tag);
                 }
                 contact.Tags = newTagList;
                 newContactList.Add(contact);
             }
             return newContactList;
         }
+
+        
 
         public  async Task<ContactModel> InsertContactAsync(ContactModel contact)
         {
