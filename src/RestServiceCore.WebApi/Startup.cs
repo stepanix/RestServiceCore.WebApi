@@ -18,6 +18,7 @@ using RestServiceCore.Service.Services.Positions;
 using RestServiceCore.Service.Services;
 
 using RestServiceCore.Service.Services.ContactMembers;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace RestServiceCore.WebApi
 {
@@ -54,6 +55,10 @@ namespace RestServiceCore.WebApi
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Rest Service Api", Version = "v1" });
+            });
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IPositionService, PositionService>();
@@ -71,6 +76,11 @@ namespace RestServiceCore.WebApi
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             app.UseCors("CorsPolicy");
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rest Service Api V1");
+            });
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationScheme = "Cookies",
