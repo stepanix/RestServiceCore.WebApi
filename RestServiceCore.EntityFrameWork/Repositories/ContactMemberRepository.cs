@@ -36,6 +36,15 @@ namespace RestServiceCore.EntityFrameWork.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<ContactMember>> GetContactMembersByTag(int tagId)
+        {
+            return await context.ContactMembers
+                .Where(cid => cid.TagId == tagId)
+                .Include(tg => tg.Tag)
+                .Include(ct => ct.Contact)
+                .ToListAsync();
+        }
+
         public Task<ContactMember> InsertContactMember(ContactMember ContactMember)
         {
             throw new NotImplementedException();

@@ -10,6 +10,7 @@ namespace RestServiceCore.Service.Services.ContactMembers
     {
         Task<IEnumerable<ContactMemberModel>> GetContactMembersAsync();
         Task<ContactMemberModel> GetContactMemberAsync(int id);
+        Task<IEnumerable<ContactMemberModel>> GetContactMembersByTagAsync(int tagId);
         Task<ContactMemberModel> InsertContactMemberAsync(ContactMemberModel ContactMember);
         Task<ContactMemberModel> UpdateContactMemberAsync(ContactMemberModel ContactMember);
         void DeleteContactMember(int id);

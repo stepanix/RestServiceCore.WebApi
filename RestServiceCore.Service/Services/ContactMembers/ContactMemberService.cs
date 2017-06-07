@@ -33,12 +33,12 @@ namespace RestServiceCore.Service.Services.ContactMembers
 
         public async Task<IEnumerable<ContactMemberModel>> GetContactMembersAsync()
         {
-            List<ContactModel> newContactList = new List<ContactModel>();
-            var contacts = await ContactMemberRepository.GetAllAsync();
-            foreach(var contact in contacts) { 
-}
-
             return mapper.Map<IEnumerable<ContactMemberModel>>(await ContactMemberRepository.GetAllAsync());
+        }
+
+        public async Task<IEnumerable<ContactMemberModel>> GetContactMembersByTagAsync(int tagId)
+        {
+            return mapper.Map<IEnumerable<ContactMemberModel>>(await ContactMemberRepository.GetContactMembersByTag(tagId));
         }
 
         public async Task<ContactMemberModel> InsertContactMemberAsync(ContactMemberModel ContactMember)

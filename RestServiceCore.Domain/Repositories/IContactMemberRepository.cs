@@ -8,6 +8,7 @@ namespace RestServiceCore.Domain.Repositories
     {
         Task<IEnumerable<ContactMember>> GetContactMembers();
         Task<IEnumerable<ContactMember>> GetContactMembers(int contactId);
+        Task<IEnumerable<ContactMember>> GetContactMembersByTag(int tagId);
         Task<ContactMember> GetContactMember(int id);
         Task<ContactMember> InsertContactMember(ContactMember ContactMember);
         Task<ContactMember> UpdateContactMember(ContactMember ContactMember);

@@ -31,6 +31,14 @@ namespace RestServiceCore.WebApi.Controllers
             return Ok(created);
         }
 
+        [HttpGet("{id:int}")]
+        [Route("bytag")]
+        public async Task<ObjectResult> ReadContactMembersByTag(int tagId)
+        {
+            var created = await ContactMemberService.GetContactMembersByTagAsync(tagId);
+            return Ok(created);
+        }
+
         [HttpGet]
         public async Task<ObjectResult> ReadAll()
         {
