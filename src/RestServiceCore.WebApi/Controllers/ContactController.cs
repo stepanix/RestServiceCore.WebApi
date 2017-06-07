@@ -24,6 +24,7 @@ namespace RestServiceCore.WebApi.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Route("byid")]
         public async Task<ObjectResult> Read(int id)
         {
             var created = await contactService.GetContactAsync(id);
@@ -35,6 +36,14 @@ namespace RestServiceCore.WebApi.Controllers
         public async Task<ObjectResult> ReadContactMembersByTag(int tagId)
         {
             var created = await contactService.GetContactsAsync(tagId);
+            return Ok(created);
+        }
+
+        [HttpGet("{id:int}")]
+        [Route("byposition")]
+        public async Task<ObjectResult> ReadContactMembersByPosition(int id)
+        {
+            var created = await contactService.GetContactsByPositionAsync(id);
             return Ok(created);
         }
 

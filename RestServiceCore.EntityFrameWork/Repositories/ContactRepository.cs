@@ -28,8 +28,9 @@ namespace RestServiceCore.EntityFrameWork.Repositories
         public async Task<Contact> GetContact(int id)
         {
             return await context.Contacts
+                .Where(uid => uid.Id == id)
                 .Include(p => p.Position)                
-                .FirstOrDefaultAsync(uid => uid.Id==id);
+                .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Contact>> GetContacts()
